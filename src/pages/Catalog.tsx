@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,9 +8,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import Icon from '@/components/ui/icon';
-import { Link } from 'react-router-dom';
 
 const Catalog = () => {
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 200000]);
@@ -385,8 +386,9 @@ const Catalog = () => {
                 {filteredProducts.map((product, index) => (
                   <Card
                     key={product.id}
-                    className="group hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 animate-scale-in"
+                    className="group hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-1 animate-scale-in cursor-pointer"
                     style={{ animationDelay: `${index * 50}ms` }}
+                    onClick={() => navigate(`/product/${product.id}`)}
                   >
                     <CardHeader>
                       <div className="flex items-start justify-between mb-4">
