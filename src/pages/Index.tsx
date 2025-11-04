@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,14 +10,14 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigation = [
-    { name: 'Главная', href: '#home' },
-    { name: 'Каталог', href: '#catalog' },
-    { name: 'Решения', href: '#solutions' },
-    { name: 'Проекты', href: '#projects' },
-    { name: 'Поддержка', href: '#support' },
-    { name: 'О компании', href: '#about' },
-    { name: 'Контакты', href: '#contacts' },
-    { name: 'Новости', href: '#news' }
+    { name: 'Главная', href: '/', isLink: true },
+    { name: 'Каталог', href: '/catalog', isLink: true },
+    { name: 'Решения', href: '#solutions', isLink: false },
+    { name: 'Проекты', href: '#projects', isLink: false },
+    { name: 'Поддержка', href: '#support', isLink: false },
+    { name: 'О компании', href: '#about', isLink: false },
+    { name: 'Контакты', href: '#contacts', isLink: false },
+    { name: 'Новости', href: '#news', isLink: false }
   ];
 
   const products = [
@@ -91,15 +92,25 @@ const Index = () => {
           </div>
 
           <nav className="hidden lg:flex items-center gap-6">
-            {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-              >
-                {item.name}
-              </a>
-            ))}
+            {navigation.map((item) => 
+              item.isLink ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </a>
+              )
+            )}
           </nav>
 
           <div className="flex items-center gap-4">
@@ -115,16 +126,27 @@ const Index = () => {
               </SheetTrigger>
               <SheetContent>
                 <nav className="flex flex-col gap-4 mt-8">
-                  {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-lg font-medium hover:text-primary transition-colors"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
+                  {navigation.map((item) => 
+                    item.isLink ? (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-lg font-medium hover:text-primary transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-lg font-medium hover:text-primary transition-colors"
+                      >
+                        {item.name}
+                      </a>
+                    )
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>
@@ -148,10 +170,12 @@ const Index = () => {
               HORECA, транспорта и корпоративного сектора.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="text-lg">
-                <Icon name="Sparkles" size={20} className="mr-2" />
-                Смотреть каталог
-              </Button>
+              <Link to="/catalog">
+                <Button size="lg" className="text-lg">
+                  <Icon name="Sparkles" size={20} className="mr-2" />
+                  Смотреть каталог
+                </Button>
+              </Link>
               <Button size="lg" variant="outline" className="text-lg">
                 <Icon name="Phone" size={20} className="mr-2" />
                 Получить консультацию
@@ -220,10 +244,12 @@ const Index = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg" variant="outline">
-              Смотреть весь каталог
-              <Icon name="ExternalLink" size={18} className="ml-2" />
-            </Button>
+            <Link to="/catalog">
+              <Button size="lg" variant="outline">
+                Смотреть весь каталог
+                <Icon name="ExternalLink" size={18} className="ml-2" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
